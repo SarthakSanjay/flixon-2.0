@@ -24,12 +24,13 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z.string().max(20, {
     message: "Username must be  less than 20 characters.",
   }),
-  password: z.string().min(4, {
+  password: z.string().min(8, {
     message: "Password must be atleast 8 characters",
   }),
 });
@@ -45,6 +46,7 @@ export function LoginForm({
       password: "",
     },
   });
+  const [isLoginFailed, setIsLoginFailed] = useState(false)
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -61,8 +63,11 @@ export function LoginForm({
         console.log("inside app");
         router.push("/");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log("Login failed:", error);
+      if (error.status >= 500) {
+        setIsLoginFailed(true)
+      }
     }
   }
 
@@ -150,6 +155,7 @@ export function LoginForm({
                       )}
                     />
                   </div>
+                  {isLoginFailed && <FormMessage>User don't exists. Please register!</FormMessage>}
                   <Button type="submit" className="w-full">
                     Login
                   </Button>
