@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from "axios";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
@@ -50,15 +50,16 @@ export function RegisterForm({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const res = await axios.post("http://localhost:4000/api/user", values)
+      console.log('res status', res.status)
       if (res.status === 200) {
-        redirect('/login')
+        router.push('/login')
       }
     } catch (error: any) {
       if (error.response?.status === 500) {
         toast({
           description: "Email already registered,Please log in."
         })
-        redirect('/login')
+        router.push('/login')
       } else {
         toast({
           description: "An error occurred. Please try again later."
