@@ -1,75 +1,126 @@
-import { Check, Home, UserRound, History, Settings } from "lucide-react"
-
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
+  Check,
+  Home,
+  UserRound,
+  History,
+  Settings,
+  LayoutDashboard,
+  PanelLeft,
+} from "lucide-react";
 
-// Menu items.
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"; // Menu items.
+import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 const items = [
   {
     title: "Home",
     url: "/",
-    icon: Home,
+    icon: <Home />,
   },
   {
     title: "Profile",
     url: "/profile",
-    icon: UserRound,
+    icon: <UserRound />,
   },
   {
     title: "Watchlist",
     url: "/watchlist",
-    icon: Check,
+    icon: <Check />,
   },
   {
     title: "History",
     url: "/history",
-    icon: History,
+    icon: <History />,
   },
   {
     title: "Settings",
     url: "/settings",
-    icon: Settings,
+    icon: <Settings />,
   },
-]
+];
 
-export function AppSidebar() {
+const adminItem = [
+  {
+    title: "Home",
+    url: "/admin/home",
+    icon: <Home />,
+  },
+  {
+    title: "Profile",
+    url: "/admin/profile",
+    icon: <UserRound />,
+  },
+  {
+    title: "Dashboard",
+    url: "/admin/dashboard",
+    icon: <LayoutDashboard />,
+  },
+  {
+    title: "Settings",
+    url: "/settings",
+    icon: <Settings />,
+  },
+];
+
+export function AppSidebar({
+  isAdminDashboard,
+}: {
+  isAdminDashboard: boolean;
+}) {
+  const pathname = usePathname();
+  const router = useRouter();
   return (
-    <Sidebar>
-      <SidebarContent className="bg-black text-white">
-        <SidebarTrigger variant={"ghost"} className="m-3 absolute" size={"icon"} />
-        <div className="h-[10%] border border-white w-full flex justify-center items-center">
-          <h1 className="text-xl">FLIXON</h1>
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button
+          variant="outline"
+          className="h-10 w-10 bg-black/50 text-white border-0 hover:bg-red-600/70 transition-all duration-300 hover:text-white relative z-50"
+        >
+          <PanelLeft />
+        </Button>
+      </SheetTrigger>
+      <SheetContent
+        side={"left"}
+        className="p-0 w-[20%] bg-transparent border-none"
+      >
+        <div className="h-full w-full bg-gradient-to-r from-black via-black to-black/0 flex flex-col justify-center items-center">
+          <SheetHeader>
+            {/* <SheetTrigger asChild> */}
+            {/*   <Button variant="outline" className="h-10 w-10"> */}
+            {/*     <PanelLeft /> */}
+            {/*   </Button> */}
+            {/* </SheetTrigger> */}
+            <SheetTitle className="sr-only">Sidebar navigation</SheetTitle>
+          </SheetHeader>
+          {items.map((item, index) => {
+            return (
+              <div
+                key={index}
+                className={cn(
+                  "h-12 w-28 flex gap-4",
+                  pathname === item.url && "text-[#EB5B00]",
+                )}
+                onClick={() => {
+                  router.push(item.url);
+                }}
+              >
+                <div>{item.icon}</div>
+                <div>{item.title}</div>
+              </div>
+            );
+          })}
         </div>
-        <SidebarGroup>
-          {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title} >
-                  <SidebarMenuButton asChild className="h-10 hover:bg-white/10 hover:text-white text-lg">
-                    <a href={item.url}>
-                      <span className="text-lg">
-                        <item.icon />
-                      </span>
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
-  )
+      </SheetContent>
+    </Sheet>
+  );
 }
-
