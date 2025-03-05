@@ -1,4 +1,5 @@
 import api from "@/lib/api";
+import { MovieResponse, MoviesResponse } from "@/types/response";
 import { useState } from "react";
 
 export default function useMovie() {
@@ -9,7 +10,7 @@ export default function useMovie() {
     setLoading(true);
     try {
       const res = await api.get(`/api/movie/${movieId}`);
-      return res.data;
+      return res.data as MovieResponse;
     } catch (error: any) {
       if (error.response) {
         setError("Error fetching movie");
@@ -23,8 +24,7 @@ export default function useMovie() {
     setLoading(true);
     try {
       const res = await api.get("/api/movies");
-      //@ts-ignore
-      return res.data.movies;
+      return res.data as MoviesResponse;
     } catch (error: any) {
       if (error.response) {
         setError("Error fetching movies");
@@ -34,5 +34,22 @@ export default function useMovie() {
     }
   };
 
-  return { getMovieById, getAllMovies, loading, error };
+  const getMovieByGenre = async (genre: string, limit: number) => {
+    setLoading(true);
+    try {
+      const res = await api.get(
+        `/api/content/${genre.charAt(0).toUpperCase() + genre.slice(1)}`,
+      );
+      console.log("genre", res.data);
+      return res.data as MoviesResponse;
+    } catch (error: any) {
+      if (error.response) {
+        setError("Error fetching movies");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { getMovieById, getAllMovies, getMovieByGenre, loading, error };
 }
