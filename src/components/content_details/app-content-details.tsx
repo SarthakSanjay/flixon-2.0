@@ -1,18 +1,14 @@
 "use client";
 import useMovie from "@/hooks/use-movie";
 import { Movie } from "@/types/movie";
-import { usePathname } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
-import { Check, Heart } from "lucide-react";
-import { Progress } from "../ui/progress";
 import WatchBtn from "../buttons/watchbtn";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import AddToWatchList from "../buttons/add-to-watchlist-btn";
+import ContentMoreDetails from "./app-content-more-details";
 
 export default function ContentDetails({ movieId }: { movieId: string }) {
-  // const path = usePathname();
-  // const movieId = path.split("/")[2];
   const { getMovieById, loading, error } = useMovie();
   const [movie, setMovie] = useState<Movie | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState("English");
@@ -52,7 +48,7 @@ export default function ContentDetails({ movieId }: { movieId: string }) {
         <div className="h-16 w-full  flex items-center gap-2 text-white font-semibold text-lg">
           <div>{movie?.releasedOn}</div>
           <Dot />
-          <div className="h-max w-max px-5 py-1 bg-white/30  rounded-lg">
+          <div className="h-max w-max px-2 py-[2px] bg-white/30  rounded-sm">
             {movie?.ageRating}
           </div>
           <Dot />
@@ -94,6 +90,7 @@ export default function ContentDetails({ movieId }: { movieId: string }) {
         <div className="h-max w-full flex gap-5">
           <WatchBtn />
           <AddToWatchList />
+          <ContentMoreDetails content={movie} />
         </div>
       </div>
     </div>
