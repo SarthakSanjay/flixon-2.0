@@ -14,7 +14,7 @@ export interface Movie {
   releasedOn: number;
   duration: number;
   rating: number;
-  cast: string[];
+  cast: Casts[];
   director: string;
   isFeatured: boolean;
   tags: string[];
@@ -23,5 +23,22 @@ export interface Movie {
   views: number;
   audioLanguages: string[];
   subtitleLanguages: string[];
+  addedOn: string;
+}
+
+export interface Casts {
+  name: string;
+  image: string;
+}
+
+export interface Watchlist {
+  profileId: string;
+  contentId: string;
+  addedOn: string;
+}
+
+export interface History {
+  profileId: string;
+  contentId: string;
   addedOn: string;
 }
