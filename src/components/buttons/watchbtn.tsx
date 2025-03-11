@@ -12,7 +12,7 @@ export default function WatchBtn() {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button className="h-12 text-lg rounded-lg bg-[#EB5B00] text-white">
+          <Button className="h-12 text-lg rounded-lg bg-gradient-to-t from-[#fc4a1a] to-[#fc4a4f] text-white">
             <Play />
             Watch Now
           </Button>
