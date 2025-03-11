@@ -5,18 +5,21 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import AddToWatchList from "../buttons/add-to-watchlist-btn";
 import ContentMoreDetails from "./app-content-more-details";
+import ImageCarousel from "../image-carousel";
+import { useAtomValue } from "jotai";
 
 export default function Hero({ content }: { content: Movie | null }) {
   const [selectedLanguage, setSelectedLanguage] = useState("English");
 
   return (
-    <div className="h-screen w-screen bg-black relative border border-white">
+    <div className="h-screen w-screen bg-black relative ">
       <div className="h-1/2 w-screen absolute bottom-0 left-0 bg-gradient-to-t from-black to-black/0 z-10"></div>
-      <img
-        src={content?.image.thumbnail}
-        className="h-screen w-screen absolute object-contain z-0"
-      />
-      <div className="h-screen w-1/2 px-10 flex justify-center items-start flex-col  absolute z-10 bg-gradient-to-r from-black to-black/0">
+
+      <div className="h-screen w-screen absolute object-contain z-0">
+        <ImageCarousel items={content?.image.screenshots} />
+      </div>
+
+      <div className="h-screen w-1/2 px-10 flex justify-center items-start flex-col  absolute z-40 bg-gradient-to-r from-black to-black/0 ">
         <div className="h-36 w-full ">
           <img
             className="h-full w-full object-contain"
@@ -75,6 +78,24 @@ export default function Hero({ content }: { content: Movie | null }) {
           <ContentMoreDetails content={content} />
         </div>
       </div>
+      <Screenshots content={content} />
+    </div>
+  );
+}
+
+function Screenshots({ content }: { content: Movie | null }) {
+  return (
+    <div className="screenshots h-44 w-1/2 absolute bottom-20 right-0 z-20 flex items-center justify-center gap-3 p-4">
+      {content?.image.screenshots.map((screenshot, index) => {
+        return (
+          <div key={index} className={cn(["h-full w-1/3 rounded-lg "])}>
+            <img
+              className="h-full w-full rounded-lg object-center object-cover"
+              src={screenshot}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
