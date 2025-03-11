@@ -54,10 +54,33 @@ export default function useUser() {
       setLoading(false);
     }
   };
+
+  const updateUserProfile = async (
+    profileId: string | undefined,
+    updates: object,
+  ) => {
+    setLoading(true);
+    if (!profileId) {
+      setLoading(false);
+      setError("Something went wrong");
+      return;
+    }
+    try {
+      const res = await api.put(`/api/profile/${profileId}`, updates);
+      return res.data;
+    } catch (error: any) {
+      if (error.response) {
+        setError("Error updating user profile ");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
   return {
     getUserProfiles,
     createUserProfile,
     getProfileById,
+    updateUserProfile,
     loading,
     error,
   };
