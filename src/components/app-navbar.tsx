@@ -1,7 +1,7 @@
 "use client";
-import ProfileDropdown from "./app-profile-dropdown";
 import { AppSidebar } from "./app-sidebar";
 import Logo from "./app-logo";
+import ProfileDropdown from "./profile/app-profile-dropdown";
 
 export function Navbar() {
   return (

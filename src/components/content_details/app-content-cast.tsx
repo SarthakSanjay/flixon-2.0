@@ -3,10 +3,10 @@ import { Fragment } from "react";
 export default function Cast({ cast }: { cast: Casts[] | undefined }) {
   return (
     <Fragment>
-      <h1 className="h-[50px] w-screen px-10 text-2xl border border-red-500 flex items-center ">
+      <h1 className="h-[50px] w-screen px-10 text-2xl flex items-center ">
         Casts
       </h1>
-      <div className="h-[250px] w-screen border border-white flex items-center gap-10 px-10 overflow-y-hidden overflow-x-scroll">
+      <div className="h-[250px] w-screen flex items-center gap-10 px-10 overflow-y-hidden overflow-x-scroll">
         {cast &&
           cast.map((actor, index) => {
             return (

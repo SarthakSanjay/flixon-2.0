@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import api from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
+import { Badge } from "./ui/badge";
 
 interface Content {
   name: string;
@@ -20,7 +21,6 @@ interface Content {
   };
   genre: string[];
   duration: number;
-  language: string[];
   director: string;
   trailerUrl: string;
   isFeatured: boolean;
@@ -44,7 +44,6 @@ export default function AdminDashboard() {
     },
     genre: [],
     duration: 0,
-    language: [],
     director: "",
     trailerUrl: "",
     isFeatured: false,
@@ -161,6 +160,12 @@ export default function AdminDashboard() {
 
               <div>
                 <Label htmlFor="genre">Genre</Label>
+
+                <div className="h-10 flex w-full border border-white">
+                  {formData.genre.map((g) => {
+                    return <Badge>{g}</Badge>
+                  })}
+                </div>
                 <Select
                   value={formData.genre[0]}
                   onValueChange={(value) => handleMultiSelect("genre", value)}
@@ -240,10 +245,28 @@ export default function AdminDashboard() {
               </div>
 
               <div>
-                <Label htmlFor="language">Language</Label>
+                <Label htmlFor="audioLanguage">Audio Language</Label>
                 <Select
-                  value={formData.language[0]}
-                  onValueChange={(value) => handleMultiSelect("language", value)}
+                  value={formData.audioLanguage[0]}
+                  onValueChange={(value) => handleMultiSelect("audioLanguage", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select language" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {LANGUAGES.map((language) => (
+                      <SelectItem key={language.toLowerCase()} value={language.toLowerCase()}>
+                        {language}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="subtitles">Subtitles</Label>
+                <Select
+                  value={formData.subtitles[0]}
+                  onValueChange={(value) => handleMultiSelect("subtitles", value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select language" />
@@ -267,14 +290,14 @@ export default function AdminDashboard() {
             images: { thumbnail: "", poster: "", screenshots: ["", "", ""] },
             genre: [],
             duration: 0,
-            language: [],
             director: "",
             trailerUrl: "",
             isFeatured: false,
             ageRating: "",
             audioLanguage: [],
             subtitles: [],
-          })}>
+          })}
+            className="text-black">
             Cancel
           </Button>
           <Button onClick={publishContent}>Publish</Button>

@@ -9,11 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,6 +23,16 @@ import { z } from "zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { useAtom } from "jotai";
+import { userAtom } from "@/atoms/atom";
+
+interface LoginResponse {
+  user: {
+    _id: string;
+    email: string;
+  };
+}
 
 const formSchema = z.object({
   email: z.string().max(20, {
@@ -46,7 +54,8 @@ export function LoginForm({
       password: "",
     },
   });
-  const [isLoginFailed, setIsLoginFailed] = useState(false)
+  const [isLoginFailed, setIsLoginFailed] = useState(false);
+  const [_, setUserState] = useAtom(userAtom);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -55,18 +64,26 @@ export function LoginForm({
         values,
         {
           withCredentials: true,
-        }
+        },
       );
+      const data = res.data as LoginResponse;
+      if (res.status === 200) {
+        setUserState({
+          id: data.user._id,
+          email: data.user.email,
+        });
+      }
+      console.log("logging data", res.data);
       // const data = await res.data
       // console.log('data', data)
       if (res.status === 200) {
         console.log("inside app");
-        router.push("/");
+        router.push("/profile");
       }
     } catch (error: any) {
       console.log("Login failed:", error);
       if (error.status >= 500) {
-        setIsLoginFailed(true)
+        setIsLoginFailed(true);
       }
     }
   }
@@ -147,15 +164,23 @@ export function LoginForm({
                             </a>
                           </div>
                           <FormControl>
-                            <Input id="password" type="password" required {...field} />
-
+                            <Input
+                              id="password"
+                              type="password"
+                              required
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
-                  {isLoginFailed && <FormMessage>User don't exists. Please register!</FormMessage>}
+                  {isLoginFailed && (
+                    <FormMessage>
+                      User don't exists. Please register!
+                    </FormMessage>
+                  )}
                   <Button type="submit" className="w-full">
                     Login
                   </Button>
