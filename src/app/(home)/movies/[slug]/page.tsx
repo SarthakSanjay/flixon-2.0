@@ -1,5 +1,5 @@
 import ContentByGenre from "@/components/app-content-by-genre";
-import ContentDetails from "@/components/app-content-details";
+import ContentDetails from "@/components/content_details/app-content-details";
 
 type MovieDetailsPageProp = {
   params: {
