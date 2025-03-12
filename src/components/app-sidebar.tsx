@@ -6,15 +6,13 @@ import {
   Settings,
   LayoutDashboard,
   PanelLeft,
+  Star,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -31,6 +29,11 @@ const items = [
     title: "Profile",
     url: "/profile",
     icon: <UserRound />,
+  },
+  {
+    title: "Favorites",
+    url: "/favorites",
+    icon: <Star />,
   },
   {
     title: "Watchlist",
@@ -95,11 +98,6 @@ export function AppSidebar({
       >
         <div className="h-full w-full bg-gradient-to-r from-black via-black to-black/0 flex flex-col justify-center items-center">
           <SheetHeader>
-            {/* <SheetTrigger asChild> */}
-            {/*   <Button variant="outline" className="h-10 w-10"> */}
-            {/*     <PanelLeft /> */}
-            {/*   </Button> */}
-            {/* </SheetTrigger> */}
             <SheetTitle className="sr-only">Sidebar navigation</SheetTitle>
           </SheetHeader>
           {items.map((item, index) => {
@@ -107,7 +105,7 @@ export function AppSidebar({
               <div
                 key={index}
                 className={cn(
-                  "h-12 w-28 flex gap-4",
+                  "h-12 w-28 flex gap-4 cursor-pointer",
                   pathname === item.url && "text-[#EB5B00]",
                 )}
                 onClick={() => {
