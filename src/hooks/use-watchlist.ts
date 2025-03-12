@@ -37,5 +37,25 @@ export function useWatchlist() {
     }
   };
 
-  return { addToWatchlist, getWatchlist, loading, error };
+  const removeFromWatchlist = async (profileId: string, contentId: string) => {
+    setLoading(true);
+    try {
+      const res = await api.delete(`/api/watchlist/${profileId}/${contentId}`);
+      return res.data;
+    } catch (error: any) {
+      if (error.response) {
+        setError("Error fetching movie");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    addToWatchlist,
+    getWatchlist,
+    removeFromWatchlist,
+    loading,
+    error,
+  };
 }
