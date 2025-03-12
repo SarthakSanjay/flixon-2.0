@@ -1,4 +1,5 @@
 import api from "@/lib/api";
+import { WatchlistResponse } from "@/types/response";
 import { useState } from "react";
 
 export function useWatchlist() {
@@ -22,5 +23,19 @@ export function useWatchlist() {
     }
   };
 
-  return { addToWatchlist, loading, error };
+  const getWatchlist = async (profileId: string) => {
+    setLoading(true);
+    try {
+      const res = await api.get(`/api/watchlist/${profileId}`);
+      return res.data as WatchlistResponse;
+    } catch (error: any) {
+      if (error.response) {
+        setError("Error fetching movie");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { addToWatchlist, getWatchlist, loading, error };
 }
