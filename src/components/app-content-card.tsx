@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 export default function ContentCard({ content }: { content: Movie }) {
   const router = useRouter();
   const handleClick = () => {
-    router.replace(`/movies/${content._id}`);
+    router.push(`/movies/${content._id}`);
   };
   return (
     <div
@@ -13,7 +13,7 @@ export default function ContentCard({ content }: { content: Movie }) {
       onClick={handleClick}
     >
       <img
-        src={content?.image.screenshots[0]}
+        src={content?.image.thumbnail}
         className="h-full w-full absolute top-0 left-0 z-10 object-center rounded-lg"
       />
       <div className="h-full w-full absolute top-0 left-0 z-0 group-hover:z-20 group-hover:bg-black/50 transition-all duration-300"></div>
