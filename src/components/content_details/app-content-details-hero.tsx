@@ -1,12 +1,12 @@
 import { Movie } from "@/types/movie";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import WatchBtn from "../buttons/watchbtn";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import AddToWatchList from "../buttons/add-to-watchlist-btn";
 import ContentMoreDetails from "./app-content-more-details";
 import ImageCarousel from "../image-carousel";
-import { useAtomValue } from "jotai";
+import FavoriteBtn from "../buttons/favorite-btn";
 
 export default function Hero({ content }: { content: Movie | null }) {
   const [selectedLanguage, setSelectedLanguage] = useState("English");
@@ -19,7 +19,7 @@ export default function Hero({ content }: { content: Movie | null }) {
         <ImageCarousel items={content?.image.screenshots} />
       </div>
 
-      <div className="h-screen w-1/2 px-10 flex justify-center items-start flex-col  absolute z-40 bg-gradient-to-r from-black to-black/0 ">
+      <div className="h-screen w-1/2 px-10 flex justify-center items-start flex-col  absolute z-10 bg-gradient-to-r from-black to-black/0 ">
         <div className="h-36 w-full ">
           <img
             className="h-full w-full object-contain"
@@ -74,9 +74,13 @@ export default function Hero({ content }: { content: Movie | null }) {
 
         <div className="h-max w-full flex gap-5">
           <WatchBtn />
-          <AddToWatchList />
+          <AddToWatchList contentId={content?._id} />
           <ContentMoreDetails content={content} />
         </div>
+      </div>
+
+      <div className="absolute right-10 top-1/2 z-30">
+        <FavoriteBtn contentId={content?._id} />
       </div>
       <Screenshots content={content} />
     </div>
