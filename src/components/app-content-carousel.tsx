@@ -7,12 +7,17 @@ import { useRouter } from "next/navigation";
 
 export default function ContentCarousel({ genre }: { genre: string }) {
   const [movies, setMovies] = useState<Movie[] | []>([]);
-  const { getMovieByGenre, loading, error } = useMovie();
+  const { getMovieByGenre, getTrendingMovies, loading, error } = useMovie();
   useEffect(() => {
     const fetchMovies = async () => {
-      const data = await getMovieByGenre(genre, 10);
-      if (data) {
-        setMovies(data?.movies);
+      if (genre === "Trending") {
+        const data = await getTrendingMovies();
+        if (data) setMovies(data.movies);
+      } else {
+        const data = await getMovieByGenre(genre, 10);
+        if (data) {
+          setMovies(data?.movies);
+        }
       }
     };
     fetchMovies();
