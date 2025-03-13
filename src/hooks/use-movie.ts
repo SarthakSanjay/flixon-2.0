@@ -50,5 +50,26 @@ export default function useMovie() {
     }
   };
 
-  return { getMovieById, getAllMovies, getMovieByGenre, loading, error };
+  const getTrendingMovies = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get("/api/content/trending");
+      return res.data as MoviesResponse;
+    } catch (error: any) {
+      if (error.response) {
+        setError("Error fetching movies");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    getMovieById,
+    getAllMovies,
+    getMovieByGenre,
+    getTrendingMovies,
+    loading,
+    error,
+  };
 }
