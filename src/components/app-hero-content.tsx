@@ -69,10 +69,12 @@ export default function HeroContent() {
                       <p className="h-1/3 w-full px-5 text-justify grid place-content-center border-0  border-green-500">
                         {text}
                       </p>
-                      <div className="h-1/3 w-full border-0 border-yellow-300 px-5">
+                      <div className="h-1/3 w-full border-0 border-yellow-300 px-5 flex flex-col gap-5">
                         <div className="flex gap-2 h-10 w-max items-center">
                           <img src="/logo/imdb.png" className="w-[4rem]" />
-                          <p>5</p>
+                          <p className="font-semibold h-6 w-max rounded-sm px-2 border border-white bg-black">
+                            5/10
+                          </p>
                         </div>
 
                         <div className="h-14 flex gap-3">
