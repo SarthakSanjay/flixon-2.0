@@ -4,17 +4,15 @@ import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
 import useUser from "@/hooks/use-user";
 import { ProfileProps } from "@/types/user";
-import CreateProfile from "./app-create-profile";
 import { useRouter } from "next/navigation";
-import { useSetRecoilState } from "recoil";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { profileAtom } from "@/atoms/atom";
+import Loading from "../loading";
 
 export default function Profile() {
   const [profiles, setProfiles] = useState<ProfileProps[] | []>([]);
-  const { getUserProfiles, createUserProfile, loading, error } = useUser();
+  const { getUserProfiles, loading, error } = useUser();
   const router = useRouter();
-  console.log("profiles", profiles);
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -26,6 +24,10 @@ export default function Profile() {
     fetchProfiles();
   }, []);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   if (!profiles) {
     router.push("/profile/create");
   }
@@ -33,15 +35,10 @@ export default function Profile() {
     <div className="h-screen w-screen bg-black flex flex-col justify-start items-center relative p-10 gap-20">
       <h1 className="text-2xl h-20 flex items-center">Who is Watching?</h1>
       <div className="h-max py-10 border-0 border-sky-400 w-2/3 flex flex-row flex-wrap justify-center items-center gap-10 ">
-        {/* <div */}
-        {/*   className="h-[90%] w-1/2 flex items-center  */}
-        {/*   overflow-y-scroll overflow-x-hidden gap-5 border border-red-500" */}
-        {/* > */}
         {profiles.map((profile) => {
           return <ProfileCard key={profile._id} profile={profile} />;
         })}
         <CreateProfileBtn />
-        {/* </div> */}
       </div>
     </div>
   );
@@ -62,7 +59,7 @@ function ProfileCard({ profile }: { profile: ProfileProps }) {
   };
   return (
     <div
-      className="h-32 w-32 border-0 border-white rounded-lg p-2 flex flex-col items-center"
+      className="h-32 w-32 border-0 border-white rounded-lg p-2 flex flex-col items-center cursor-pointer hover:scale-105 transition-all ease-in-out"
       onClick={handleClick}
     >
       <div className="h-24 w-24 rounded-lg">
