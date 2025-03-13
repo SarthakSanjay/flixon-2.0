@@ -30,7 +30,7 @@ export default function Favorite() {
   return (
     <div className="h-screen w-screen text-white bg-black border border-white py-16 px-12 pt-36 flex flex-wrap gap-5 relative">
       <h1 className="h-14 text-2xl text-white absolute left-12 top-20">
-        {capatilizedFirstLetter("favorite")}
+        {capatilizedFirstLetter("favorites")}
       </h1>
       {movies &&
         movies.map((movie: Movie) => {
