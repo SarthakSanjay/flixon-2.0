@@ -1,15 +1,16 @@
 "use client";
 import useProfile from "@/hooks/use-profile";
-import { ProfileProps } from "@/types/user";
+import { ProfileProps, User } from "@/types/user";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
-import { useAtomValue } from "jotai";
-import { userAtom } from "@/atoms/atom";
+import useUser from "@/hooks/use-user";
+import { formatDate } from "@/utils";
 
 export default function ProfileDetails() {
   const [profileData, setProfileData] = useState<ProfileProps | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const { getProfileById, loading } = useProfile();
-  const user = useAtomValue(userAtom);
+  const { getUser } = useUser();
   useEffect(() => {
     const fetchProfile = async () => {
       const profileId = localStorage.getItem("profileId");
@@ -24,6 +25,20 @@ export default function ProfileDetails() {
     fetchProfile();
   }, []);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userId = localStorage.getItem("userId");
+      if (userId) {
+        const res = await getUser(userId);
+        if (res) {
+          console.log(res);
+          setUser(res.user);
+        }
+      }
+    };
+    fetchUser();
+  }, []);
+
   if (loading) {
     return <Loading />;
   }
@@ -34,7 +49,7 @@ export default function ProfileDetails() {
           Profile Details
         </h1>
 
-        <div className="h-[90%] w-full">
+        <div className="h-[90%] w-full flex">
           <div className="border h-full w-[30%] flex flex-col justify-start items-center gap-5 py-10">
             <div className="h-28 w-28 rounded-full">
               <img
@@ -43,10 +58,26 @@ export default function ProfileDetails() {
               />
             </div>
             <h1 className="text-xl">{profileData?.name}</h1>
-            <div>{user.email}</div>
+            <div>{user?.email}</div>
+            <div>Joined on: {user && formatDate(user?.createdAt)}</div>
+          </div>
+
+          <div className="h-full w-[70%] border border-red-50 p-10 flex gap-10">
+            {["Watchlist", "Favorite", "Liked"].map((type, index) => {
+              return <Category type={type} total={(index + 1) * 10} />;
+            })}
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function Category({ total, type }: { total: number; type: string }) {
+  return (
+    <div className="h-32 w-64 border rounded-lg flex justify-center items-center flex-col gap-2">
+      <div className="text-xl font-bold">{total}</div>
+      <div className="text-lg">{type}</div>
     </div>
   );
 }
