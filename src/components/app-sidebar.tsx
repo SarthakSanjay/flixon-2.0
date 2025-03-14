@@ -27,7 +27,7 @@ const items = [
   },
   {
     title: "Profile",
-    url: "/profile",
+    url: "/profile/details",
     icon: <UserRound />,
   },
   {
