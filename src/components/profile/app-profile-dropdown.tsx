@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import { cn, logout } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import useUser from "@/hooks/use-user";
+import useProfile from "@/hooks/use-profile";
 import { ProfileProps } from "@/types/user";
 import { useAtom } from "jotai";
 import { profileAtom } from "@/atoms/atom";
@@ -18,7 +18,7 @@ import { Check, X } from "lucide-react";
 
 export default function ProfileDropdown() {
   const router = useRouter();
-  const { getProfileById, loading, error } = useUser();
+  const { getProfileById, loading, error } = useProfile();
   const [userProfile, setUserProfile] = useState<ProfileProps | null>(null);
   const [profile] = useAtom(profileAtom);
 
@@ -79,7 +79,7 @@ export default function ProfileDropdown() {
 
 function EditProfile({ userProfile }: { userProfile: ProfileProps | null }) {
   const [edit, setEdit] = useState(false);
-  const { updateUserProfile } = useUser();
+  const { updateUserProfile } = useProfile();
   const [username, setUsername] = useState("");
 
   const handleSave = async () => {

@@ -2,7 +2,7 @@
 import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
-import useUser from "@/hooks/use-user";
+import useProfile from "@/hooks/use-profile";
 import { ProfileProps } from "@/types/user";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
@@ -11,7 +11,7 @@ import Loading from "../loading";
 
 export default function Profile() {
   const [profiles, setProfiles] = useState<ProfileProps[] | []>([]);
-  const { getUserProfiles, loading, error } = useUser();
+  const { getUserProfiles, loading, error } = useProfile();
   const router = useRouter();
 
   useEffect(() => {

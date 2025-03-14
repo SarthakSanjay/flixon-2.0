@@ -2,11 +2,11 @@
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
-import useUser from "@/hooks/use-user";
+import useProfile from "@/hooks/use-profile";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 export default function CreateProfile() {
-  const { createUserProfile, loading, error } = useUser();
+  const { createUserProfile, loading, error } = useProfile();
   const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState(
     "https://www.thestatesman.com/wp-content/uploads/2024/04/Avatar-3.jpg",
