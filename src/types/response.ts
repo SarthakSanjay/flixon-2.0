@@ -16,3 +16,18 @@ export interface ProfileResponse {
   message: string;
   profiles: ProfileProps[];
 }
+
+export interface SingleProfileRes {
+  message: string;
+  profile: ProfileProps;
+}
+
+export interface WatchlistResponse {
+  message: string;
+  watchlist: Movie[];
+}
+
+export interface FavoriteResponse {
+  message: string;
+  data: Movie[];
+}
