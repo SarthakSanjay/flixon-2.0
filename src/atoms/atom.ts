@@ -1,5 +1,4 @@
 import { atom } from "jotai";
-import { IdCard } from "lucide-react";
 
 interface User {
   id: string;
