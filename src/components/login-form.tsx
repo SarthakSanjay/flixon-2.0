@@ -68,6 +68,7 @@ export function LoginForm({
       );
       const data = res.data as LoginResponse;
       if (res.status === 200) {
+        localStorage.setItem("userId", data.user._id);
         setUserState({
           id: data.user._id,
           email: data.user.email,
