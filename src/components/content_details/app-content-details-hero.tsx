@@ -7,6 +7,7 @@ import AddToWatchList from "../buttons/add-to-watchlist-btn";
 import ContentMoreDetails from "./app-content-more-details";
 import ImageCarousel from "../image-carousel";
 import FavoriteBtn from "../buttons/favorite-btn";
+import { SiImdb } from "react-icons/si";
 
 export default function Hero({ content }: { content: Movie | null }) {
   const [selectedLanguage, setSelectedLanguage] = useState("English");
@@ -38,6 +39,13 @@ export default function Hero({ content }: { content: Movie | null }) {
           </div>
           <Dot />
           <div>{content?.audioLanguages.length} Languages</div>
+          <Dot />
+          <div className="flex gap-2 items-center">
+            <span className="text-2xl">
+              <SiImdb />
+            </span>
+            <span>{content?.rating}</span>
+          </div>
         </div>
 
         <div className="h-28 w-full">{content?.description}</div>

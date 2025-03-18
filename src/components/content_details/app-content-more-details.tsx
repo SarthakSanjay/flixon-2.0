@@ -3,6 +3,7 @@ import {
   Sheet,
   SheetContent,
   SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Movie } from "@/types/movie";
@@ -22,7 +23,9 @@ export default function ContentMoreDetails({
         </Button>
       </SheetTrigger>
       <SheetContent className=" bg-black">
-        <SheetHeader>More Info</SheetHeader>
+        <SheetHeader>
+          <SheetTitle className="sr-only">Sidebar navigation</SheetTitle>
+        </SheetHeader>
         <div className="h-max w-full flex flex-col gap-1 mt-5">
           <h1 className="text-xl">Audio Languages</h1>
           <div className="h-max w-full flex flex-wrap gap-x-1 gap-y-0">
