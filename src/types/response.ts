@@ -1,4 +1,5 @@
 import { Movie } from "./movie";
+import { Show } from "./show";
 import { ProfileProps } from "./user";
 
 export interface MoviesResponse {
@@ -10,6 +11,17 @@ export interface MoviesResponse {
 export interface MovieResponse {
   message: string;
   movie: Movie;
+}
+
+export interface ShowResponse {
+  message: string;
+  total: number;
+  shows: Show[];
+}
+
+export interface ShowResponse {
+  message: string;
+  show: Show;
 }
 
 export interface ProfileResponse {
