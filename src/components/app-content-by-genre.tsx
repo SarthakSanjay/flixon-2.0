@@ -1,12 +1,12 @@
 "use client";
-import useMovie from "@/hooks/use-movie";
 import { Movie } from "@/types/movie";
 import { useEffect, useState } from "react";
 import ContentCard from "./app-content-card";
 import { capatilizedFirstLetter } from "@/utils";
+import useContent from "@/hooks/use-content";
 
 export default function ContentByGenre({ genre }: { genre: string }) {
-  const { getMovieByGenre, loading, error } = useMovie();
+  const { getMovieByGenre, loading, error } = useContent();
   const [movies, setMovies] = useState<Movie[] | []>([]);
   console.log("hello genre", genre);
 

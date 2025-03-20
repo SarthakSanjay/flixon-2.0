@@ -12,7 +12,7 @@ import AddToWatchList from "./buttons/add-to-watchlist-btn";
 import ContentCarousel from "./app-content-carousel";
 import { items } from "@/lib/utils";
 
-export default function HeroContent() {
+export default function HeroContent({ type }: { type: string }) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -90,7 +90,7 @@ export default function HeroContent() {
         </CarouselContent>
       </Carousel>
       <div className="absolute bottom-0 z-10 h-max w-full bg-gradient-to-t from-black via-black/60 to-black/0">
-        <ContentCarousel genre="Trending" />
+        <ContentCarousel genre="Trending" type={type} />
       </div>
     </div>
   );

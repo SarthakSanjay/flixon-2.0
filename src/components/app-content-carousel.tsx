@@ -1,13 +1,20 @@
 "use client";
 import { useEffect, useState } from "react";
 import ContentCard from "./app-content-card";
-import useMovie from "@/hooks/use-movie";
 import { Movie } from "@/types/movie";
 import { useRouter } from "next/navigation";
+import useContent from "@/hooks/use-content";
 
-export default function ContentCarousel({ genre }: { genre: string }) {
+export default function ContentCarousel({
+  genre,
+  type,
+}: {
+  genre: string;
+  type: string;
+}) {
   const [movies, setMovies] = useState<Movie[] | []>([]);
-  const { getMovieByGenre, getTrendingMovies, loading, error } = useMovie();
+  const [show, setShow] = useState([]);
+  const { getMovieByGenre, getTrendingMovies, loading, error } = useContent();
   useEffect(() => {
     const fetchMovies = async () => {
       if (genre === "Trending") {
