@@ -2,10 +2,16 @@
 import { Movie } from "@/types/movie";
 import { useRouter } from "next/navigation";
 
-export default function ContentCard({ content }: { content: Movie }) {
+export default function ContentCard({
+  content,
+  type,
+}: {
+  content: Movie;
+  type: string;
+}) {
   const router = useRouter();
   const handleClick = () => {
-    router.push(`/movies/${content._id}`);
+    router.push(`/${type}s/${content._id}`);
   };
   return (
     <div

@@ -5,7 +5,13 @@ import ContentCard from "./app-content-card";
 import { capatilizedFirstLetter } from "@/utils";
 import useContent from "@/hooks/use-content";
 
-export default function ContentByGenre({ genre }: { genre: string }) {
+export default function ContentByGenre({
+  genre,
+  type,
+}: {
+  genre: string;
+  type: string;
+}) {
   const { getMovieByGenre, loading, error } = useContent();
   const [movies, setMovies] = useState<Movie[] | []>([]);
   console.log("hello genre", genre);
@@ -30,7 +36,7 @@ export default function ContentByGenre({ genre }: { genre: string }) {
       </h1>
       {movies &&
         movies.map((movie: Movie) => {
-          return <ContentCard key={movie._id} content={movie} />;
+          return <ContentCard key={movie._id} content={movie} type={type} />;
         })}
     </div>
   );

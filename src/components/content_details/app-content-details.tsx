@@ -5,29 +5,47 @@ import { useEffect, useState } from "react";
 import Cast from "./app-content-cast";
 import ContentCarousel from "../app-content-carousel";
 import useContent from "@/hooks/use-content";
+import { Show } from "@/types/show";
+import Loading from "../loading";
 
-export default function ContentDetails({ movieId }: { movieId: string }) {
-  const { getMovieById, loading, error } = useContent();
+export default function ContentDetails({
+  contentId,
+  type,
+}: {
+  contentId: string;
+  type: string;
+}) {
+  const { getMovieById, getShowById, loading, error } = useContent();
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [show, setShow] = useState<Show | null>(null);
 
   useEffect(() => {
     const fetch = async () => {
-      const data = await getMovieById(movieId);
-      if (data) {
-        setMovie(data.movie);
+      if (type === "movie") {
+        const data = await getMovieById(contentId);
+        if (data) {
+          setMovie(data.movie);
+        }
+      } else {
+        const data = await getShowById(contentId);
+        if (data) {
+          setShow(data.show);
+        }
       }
     };
     fetch();
-  }, [movieId]);
+  }, [contentId]);
 
-  if (loading) {
-    return <div>Loading...</div>;
+  const content = movie || show;
+
+  if (loading || !content) {
+    return <Loading />;
   }
   return (
     <div className="h-screen w-screen overflow-x-hidden overflow-y-scroll">
-      <Hero content={movie} />
-      <Cast cast={movie?.cast} />
-      <ContentCarousel genre="Action" type="" />
+      <Hero content={content} />
+      <Cast cast={content?.cast} />
+      <ContentCarousel genre="Action" type={type} />
     </div>
   );
 }
