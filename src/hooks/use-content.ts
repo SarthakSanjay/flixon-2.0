@@ -78,6 +78,22 @@ export default function useContent() {
     }
   };
 
+  const getShowByGenre = async (genre: string, limit: number) => {
+    setLoading(true);
+    try {
+      const res = await api.get(
+        `/api/shows/${genre.charAt(0).toUpperCase() + genre.slice(1)}`,
+      );
+      return res.data as ShowResponse;
+    } catch (error: any) {
+      if (error.response) {
+        setError("Error fetching movies");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     getMovieById,
     getAllMovies,
