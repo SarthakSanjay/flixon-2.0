@@ -15,7 +15,14 @@ export default function ContentCarousel({
 }) {
   const [movies, setMovies] = useState<Movie[] | []>([]);
   const [shows, setShows] = useState<Show[] | []>([]);
-  const { getMovieByGenre, getTrendingMovies, loading, error } = useContent();
+  const {
+    getMovieByGenre,
+    getTrendingMovies,
+    getShowByGenre,
+    getTrendingShows,
+    loading,
+    error,
+  } = useContent();
   useEffect(() => {
     const fetchMovies = async () => {
       if (genre === "Trending") {
@@ -30,17 +37,26 @@ export default function ContentCarousel({
     };
 
     const fetchShows = async () => {
-      // const data = await get
+      if (genre === "Trending") {
+        const data = await getTrendingShows();
+        if (data) setShows(data.shows);
+      } else {
+        const data = await getShowByGenre(genre, 10);
+        if (data) {
+          setShows(data?.shows);
+        }
+      }
     };
-    fetchMovies();
+
+    if (type === "show") {
+      fetchShows();
+    } else {
+      fetchMovies();
+    }
   }, []);
 
   if (loading) {
     return <div>Loading...</div>;
-  }
-
-  if (!movies) {
-    return "";
   }
 
   return (
@@ -48,13 +64,25 @@ export default function ContentCarousel({
       <div className="h-[2.6rem] px-10 text-2xl flex justify-between items-center">
         <h1>{genre}</h1>
       </div>
-      <div className="h-[13.4rem] py-[1rem] w-full flex  items-center overflow-x-scroll gap-10 px-10 no-scrollbar ">
-        {movies &&
-          movies.map((movie: Movie) => {
-            return <ContentCard key={movie._id} content={movie} type={type} />;
-          })}
-        <SeeAllCard genre={genre} />
-      </div>
+      {type === "show" ? (
+        <div className="h-[13.4rem] py-[1rem] w-full flex  items-center overflow-x-scroll gap-10 px-10 no-scrollbar ">
+          {shows &&
+            shows.map((show: Show) => {
+              return <ContentCard key={show._id} content={show} type={type} />;
+            })}
+          <SeeAllCard genre={genre} />
+        </div>
+      ) : (
+        <div className="h-[13.4rem] py-[1rem] w-full flex  items-center overflow-x-scroll gap-10 px-10 no-scrollbar ">
+          {movies &&
+            movies.map((movie: Movie) => {
+              return (
+                <ContentCard key={movie._id} content={movie} type={type} />
+              );
+            })}
+          <SeeAllCard genre={genre} />
+        </div>
+      )}
     </div>
   );
 }
