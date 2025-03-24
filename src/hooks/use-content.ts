@@ -1,5 +1,10 @@
 import api from "@/lib/api";
-import { MovieResponse, MoviesResponse, ShowResponse } from "@/types/response";
+import {
+  MovieResponse,
+  MoviesResponse,
+  ShowResponse,
+  ShowsResponse,
+} from "@/types/response";
 import { useState } from "react";
 
 export default function useContent() {
@@ -84,10 +89,24 @@ export default function useContent() {
       const res = await api.get(
         `/api/shows/${genre.charAt(0).toUpperCase() + genre.slice(1)}`,
       );
-      return res.data as ShowResponse;
+      return res.data as ShowsResponse;
     } catch (error: any) {
       if (error.response) {
         setError("Error fetching movies");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getTrendingShows = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get("/api/shows/trending");
+      return res.data as ShowsResponse;
+    } catch (error: any) {
+      if (error.response) {
+        setError("Error fetching shows");
       }
     } finally {
       setLoading(false);
@@ -100,6 +119,8 @@ export default function useContent() {
     getMovieByGenre,
     getTrendingMovies,
     getShowById,
+    getShowByGenre,
+    getTrendingShows,
     loading,
     error,
   };
