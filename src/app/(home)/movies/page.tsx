@@ -4,5 +4,5 @@ import { usePathname } from "next/navigation";
 
 export default function page() {
   const pathname = usePathname();
-  return <Content pathname={pathname} />;
+  return <Content pathname={pathname} type="movie" />;
 }

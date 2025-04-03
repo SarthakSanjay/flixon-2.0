@@ -10,7 +10,7 @@ type MovieDetailsPageProp = {
 export default function page({ params }: MovieDetailsPageProp) {
   const genre = params.slug.split("-");
   if (genre[0] === "genre") {
-    return <ContentByGenre genre={genre[1]} />;
+    return <ContentByGenre genre={genre[1]} type="movie" />;
   }
-  return <ContentDetails movieId={params.slug} />;
+  return <ContentDetails contentId={params.slug} type="movie" />;
 }
