@@ -13,7 +13,7 @@ export interface MovieResponse {
   movie: Movie;
 }
 
-export interface ShowResponse {
+export interface ShowsResponse {
   message: string;
   total: number;
   shows: Show[];
