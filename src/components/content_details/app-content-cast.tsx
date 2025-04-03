@@ -20,7 +20,7 @@ export default function Cast({ cast }: { cast: Casts[] | undefined }) {
                     src={actor.image}
                   />
                 </div>
-                <div>{actor.name}</div>
+                <div className="italic">{actor.name}</div>
               </div>
             );
           })}

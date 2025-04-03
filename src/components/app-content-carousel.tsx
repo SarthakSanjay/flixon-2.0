@@ -59,6 +59,10 @@ export default function ContentCarousel({
     return <div>Loading...</div>;
   }
 
+  if (!movies || !shows) {
+    return "";
+  }
+
   return (
     <div className="h-[16rem] w-full flex flex-col">
       <div className="h-[2.6rem] px-10 text-2xl flex justify-between items-center">

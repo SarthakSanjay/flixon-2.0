@@ -2,13 +2,10 @@
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import ProfileDropdown from "./app-profile-dropdown";
-import { AppSidebar } from "./app-sidebar";
 import { House, MonitorPlay, Popcorn } from "lucide-react";
 
 export function Menubar() {
@@ -62,7 +59,7 @@ export function Menubar() {
                 {item.label}
               </div>
             </NavigationMenuItem>
-          ))}{" "}
+          ))}
         </NavigationMenuList>
       </NavigationMenu>
     </div>

@@ -7,6 +7,7 @@ import ContentCarousel from "../app-content-carousel";
 import useContent from "@/hooks/use-content";
 import { Show } from "@/types/show";
 import Loading from "../loading";
+import Episodes from "./show-episodes";
 
 export default function ContentDetails({
   contentId,
@@ -45,6 +46,7 @@ export default function ContentDetails({
     <div className="h-screen w-screen overflow-x-hidden overflow-y-scroll">
       <Hero content={content} />
       <Cast cast={content?.cast} />
+      {type === "show" ? <Episodes /> : ""}
       <ContentCarousel genre="Action" type={type} />
     </div>
   );

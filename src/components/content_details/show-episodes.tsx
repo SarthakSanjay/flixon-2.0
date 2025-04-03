@@ -39,9 +39,10 @@ function Seasons({
 }) {
   return (
     <div className="h-12 w-full flex gap-5">
-      {["1", "2"].map((s) => {
+      {["1", "2"].map((s, i) => {
         return (
           <Button
+            key={i}
             className={cn(
               "text-white text-lg bg-white/20",
               season === parseInt(s) ? "bg-orange-500/20" : "",

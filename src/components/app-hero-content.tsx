@@ -11,6 +11,7 @@ import WatchBtn from "./buttons/watchbtn";
 import AddToWatchList from "./buttons/add-to-watchlist-btn";
 import ContentCarousel from "./app-content-carousel";
 import { items } from "@/lib/utils";
+import { SiImdb } from "react-icons/si";
 
 export default function HeroContent({ type }: { type: string }) {
   const [api, setApi] = useState<CarouselApi>();
@@ -70,13 +71,12 @@ export default function HeroContent({ type }: { type: string }) {
                         {text}
                       </p>
                       <div className="h-1/3 w-full border-0 border-yellow-300 px-5 flex flex-col gap-5">
-                        <div className="flex gap-2 h-10 w-max items-center">
-                          <img src="/logo/imdb.png" className="w-[4rem]" />
-                          <p className="font-semibold h-6 w-max rounded-sm px-2 border border-white bg-black">
-                            5/10
-                          </p>
+                        <div className="flex gap-2 items-center">
+                          <span className="text-2xl">
+                            <SiImdb />
+                          </span>
+                          <span>7.8</span>
                         </div>
-
                         <div className="h-14 flex gap-3">
                           <WatchBtn />
                           <AddToWatchList />
