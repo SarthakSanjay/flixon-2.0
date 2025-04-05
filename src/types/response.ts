@@ -34,9 +34,14 @@ export interface SingleProfileRes {
   profile: ProfileProps;
 }
 
-export interface WatchlistResponse {
+export interface WatchlistMovieResponse {
   message: string;
   watchlist: Movie[];
+}
+
+export interface WatchlistShowResponse {
+  message: string;
+  watchlist: Show[];
 }
 
 export interface FavoriteResponse {
