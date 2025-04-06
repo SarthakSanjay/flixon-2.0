@@ -10,9 +10,21 @@ import { useWatchlist } from "@/hooks/use-watchlist";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
 
-export default function AddToWatchList({ contentId }: { contentId?: string }) {
-  const { addToWatchlist, getWatchlist, removeFromWatchlist, loading, error } =
-    useWatchlist();
+export default function AddToWatchList({
+  contentId,
+  contentType,
+}: {
+  contentId?: string;
+  contentType: string;
+}) {
+  const {
+    addToWatchlist,
+    getWatchlistMovies,
+    getWatchlistShows,
+    removeFromWatchlist,
+    loading,
+    error,
+  } = useWatchlist();
   const [isPresent, setIsPresent] = useState(false);
 
   const handleClick = async () => {
@@ -34,11 +46,20 @@ export default function AddToWatchList({ contentId }: { contentId?: string }) {
     const fetchWatchlist = async () => {
       const profileId = localStorage.getItem("profileId");
       if (profileId) {
-        const res = await getWatchlist(profileId);
-        if (res) {
-          setIsPresent(
-            res?.watchlist.some((content) => content._id === contentId),
-          );
+        if (contentType === "movie") {
+          const res = await getWatchlistMovies(profileId);
+          if (res) {
+            setIsPresent(
+              res?.watchlist.some((content) => content._id === contentId),
+            );
+          }
+        } else {
+          const res = await getWatchlistShows(profileId);
+          if (res) {
+            setIsPresent(
+              res?.watchlist.some((content) => content._id === contentId),
+            );
+          }
         }
       }
     };
