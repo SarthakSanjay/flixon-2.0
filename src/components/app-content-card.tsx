@@ -11,6 +11,7 @@ export default function ContentCard({
 }) {
   const router = useRouter();
   const handleClick = () => {
+    if (type === undefined) type = "movie";
     router.push(`/${type}s/${content._id}`);
   };
   return (
