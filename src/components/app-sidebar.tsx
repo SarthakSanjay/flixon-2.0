@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sheet"; // Menu items.
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 const items = [
   {
     title: "Home",
@@ -105,7 +106,7 @@ export function AppSidebar({
               <div
                 key={index}
                 className={cn(
-                  "h-12 w-28 flex gap-4 cursor-pointer",
+                  "h-12 w-28 flex gap-4 cursor-pointer hover:text-[#EB5B00]",
                   pathname === item.url && "text-[#EB5B00]",
                 )}
                 onClick={() => {
