@@ -34,10 +34,12 @@ export default function ContentByGenre({
       <h1 className="h-14 text-2xl text-white">
         {capatilizedFirstLetter(genre)}
       </h1>
-      {movies &&
-        movies.map((movie: Movie) => {
-          return <ContentCard key={movie._id} content={movie} type={type} />;
-        })}
+      <div className="h-max w-full flex gap-10">
+        {movies &&
+          movies.map((movie: Movie) => {
+            return <ContentCard key={movie._id} content={movie} type={type} />;
+          })}
+      </div>
     </div>
   );
 }
