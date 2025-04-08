@@ -113,6 +113,35 @@ export default function useContent() {
     }
   };
 
+  const getShowsSeason = async (showId: string) => {
+    if (!showId) return;
+    setLoading(true);
+    try {
+      const res = await api.get(`/api/show/${showId}`);
+      return res.data;
+    } catch (error: any) {
+      if (error.response) {
+        setError("Error fetching shows season");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getEpisodes = async (showId: string, seasonId: string) => {
+    if (!showId || !seasonId) return;
+    setLoading(true);
+    try {
+      const res = await api.get(`/api/show/${showId}/${seasonId}`);
+    } catch (error: any) {
+      if (error.response) {
+        setError("Error fetching shows season episode");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     getMovieById,
     getAllMovies,
@@ -121,6 +150,8 @@ export default function useContent() {
     getShowById,
     getShowByGenre,
     getTrendingShows,
+    getShowsSeason,
+    getEpisodes,
     loading,
     error,
   };
