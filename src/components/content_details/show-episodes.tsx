@@ -1,15 +1,25 @@
-import { useState } from "react";
+"use client";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import useContent from "@/hooks/use-content";
+import { Season } from "@/types/show";
+import Loading from "../loading";
+import { useParams } from "next/navigation";
 
 export default function Episodes() {
   const [currentSeason, setCurrentSeason] = useState(1);
+  const { slug } = useParams();
   return (
     <div className="h-max w-full px-10 py-5">
       <h1 className="h-[50px] w-screen text-2xl flex items-center ">
         Episodes
       </h1>
-      <Seasons season={currentSeason} setSeason={setCurrentSeason} />
+      <Seasons
+        showId={slug?.toString()}
+        currentSeason={currentSeason}
+        setCurrentSeason={setCurrentSeason}
+      />
 
       {[
         "avengersendgame",
@@ -31,25 +41,44 @@ export default function Episodes() {
 }
 
 function Seasons({
-  season,
-  setSeason,
+  currentSeason,
+  setCurrentSeason,
+  showId,
 }: {
-  season: number;
-  setSeason: (value: number) => void;
+  currentSeason: number;
+  setCurrentSeason: (value: number) => void;
+  showId: string | undefined;
 }) {
+  const { getShowsSeason, loading, error } = useContent();
+  const [seasons, setSeasons] = useState<Season[] | []>([]);
+
+  useEffect(() => {
+    async function fetchSeason() {
+      if (showId) {
+        const res = await getShowsSeason(showId);
+        if (res) setSeasons(res.data);
+      }
+    }
+
+    fetchSeason();
+  }, []);
+  console.log("seasons ", seasons);
+
+  if (loading) <Loading />;
+
   return (
     <div className="h-12 w-full flex gap-5">
-      {["1", "2"].map((s, i) => {
+      {seasons.map((season, index) => {
         return (
           <Button
-            key={i}
+            key={season._id}
             className={cn(
               "text-white text-lg bg-white/20",
-              season === parseInt(s) ? "bg-orange-500/20" : "",
+              season.number === index ? "bg-orange-500/20" : "",
             )}
-            onClick={() => setSeason(parseInt(s))}
+            onClick={() => setCurrentSeason(season.number)}
           >
-            Season {s}
+            Season {season.number}
           </Button>
         );
       })}
