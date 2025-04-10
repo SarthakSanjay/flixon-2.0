@@ -1,5 +1,5 @@
 import { Movie } from "./movie";
-import { Show } from "./show";
+import { Season, Show } from "./show";
 import { ProfileProps } from "./user";
 
 export interface MoviesResponse {
@@ -22,6 +22,11 @@ export interface ShowsResponse {
 export interface ShowResponse {
   message: string;
   show: Show;
+}
+
+export interface SeasonResponse {
+  message: string;
+  data: Season[];
 }
 
 export interface ProfileResponse {
