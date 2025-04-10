@@ -2,6 +2,7 @@ import api from "@/lib/api";
 import {
   MovieResponse,
   MoviesResponse,
+  SeasonResponse,
   ShowResponse,
   ShowsResponse,
 } from "@/types/response";
@@ -58,7 +59,7 @@ export default function useContent() {
   const getTrendingMovies = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/api/movies/trending");
+      const res = await api.get("/api/trending/movies");
       return res.data as MoviesResponse;
     } catch (error: any) {
       if (error.response) {
@@ -118,7 +119,7 @@ export default function useContent() {
     setLoading(true);
     try {
       const res = await api.get(`/api/show/${showId}`);
-      return res.data;
+      return res.data as SeasonResponse;
     } catch (error: any) {
       if (error.response) {
         setError("Error fetching shows season");
