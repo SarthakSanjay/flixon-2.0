@@ -29,13 +29,13 @@ export interface Show {
   addedOn: string;
 }
 
-interface Season {
+export interface Season {
   _id: string;
+  showId: string;
   number: number;
-  episodes: Episode[];
 }
 
-interface Episode {
+export interface Episode {
   _id: string;
   thumbnail: string;
   title: string;
