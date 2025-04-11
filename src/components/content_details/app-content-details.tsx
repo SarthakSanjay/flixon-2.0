@@ -46,7 +46,7 @@ export default function ContentDetails({
     <div className="h-screen w-screen overflow-x-hidden overflow-y-scroll">
       <Hero content={content} />
       <Cast cast={content?.cast} />
-      {type === "show" && show?._id ? <Episodes showId={show?._id} /> : ""}
+      {type === "show" ? <Episodes /> : ""}
       <ContentCarousel genre="Action" type={type} />
     </div>
   );
