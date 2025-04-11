@@ -1,5 +1,6 @@
 import api from "@/lib/api";
 import {
+  EpisodesResponse,
   MovieResponse,
   MoviesResponse,
   SeasonResponse,
@@ -118,7 +119,7 @@ export default function useContent() {
     if (!showId) return;
     setLoading(true);
     try {
-      const res = await api.get(`/api/show/${showId}`);
+      const res = await api.get(`/api/show/season/${showId}`);
       return res.data as SeasonResponse;
     } catch (error: any) {
       if (error.response) {
@@ -134,6 +135,7 @@ export default function useContent() {
     setLoading(true);
     try {
       const res = await api.get(`/api/show/${showId}/${seasonId}`);
+      return res.data as EpisodesResponse;
     } catch (error: any) {
       if (error.response) {
         setError("Error fetching shows season episode");
