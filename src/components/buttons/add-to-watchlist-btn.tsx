@@ -42,7 +42,6 @@ export default function AddToWatchList({
   };
 
   useEffect(() => {
-    console.log("inside watchlist button");
     const fetchWatchlist = async () => {
       const profileId = localStorage.getItem("profileId");
       if (profileId) {

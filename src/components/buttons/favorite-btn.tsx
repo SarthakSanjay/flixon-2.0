@@ -36,7 +36,6 @@ export default function FavoriteBtn({ contentId }: { contentId?: string }) {
   };
 
   useEffect(() => {
-    console.log("inside watchlist button");
     const fetchWatchlist = async () => {
       const profileId = localStorage.getItem("profileId");
       if (profileId) {
