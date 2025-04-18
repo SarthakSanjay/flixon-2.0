@@ -1,3 +1,4 @@
+import { Season } from "@/types/show";
 import { atom } from "jotai";
 
 interface User {
@@ -18,4 +19,10 @@ export const userAtom = atom<User>({
 export const profileAtom = atom<Profile>({
   id: "",
   userId: "",
+});
+
+export const currentSeasonAtom = atom<Season>({
+  _id: "",
+  showId: "",
+  number: 0,
 });
