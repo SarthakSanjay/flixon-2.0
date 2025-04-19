@@ -26,3 +26,5 @@ export const currentSeasonAtom = atom<Season>({
   showId: "",
   number: 0,
 });
+
+export const contentTypeAtom = atom("movie");
