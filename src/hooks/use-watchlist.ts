@@ -9,10 +9,10 @@ export function useWatchlist() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const addToWatchlist = async (contentId: string, profileId: string) => {
+  const addMovieToWatchlist = async (contentId: string, profileId: string) => {
     setLoading(true);
     try {
-      const res = await api.post(`/api/watchlist`, {
+      const res = await api.post(`/api/watchlist/movie`, {
         profileId: profileId,
         contentId: contentId,
       });
@@ -20,6 +20,23 @@ export function useWatchlist() {
     } catch (error: any) {
       if (error.response) {
         setError("Error fetching movie");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addShowToWatchlist = async (contentId: string, profileId: string) => {
+    setLoading(true);
+    try {
+      const res = await api.post(`/api/watchlist/show`, {
+        profileId: profileId,
+        contentId: contentId,
+      });
+      return res.data;
+    } catch (error: any) {
+      if (error.response) {
+        setError("Error fetching show");
       }
     } finally {
       setLoading(false);
@@ -69,7 +86,8 @@ export function useWatchlist() {
   };
 
   return {
-    addToWatchlist,
+    addMovieToWatchlist,
+    addShowToWatchlist,
     getWatchlistMovies,
     removeFromWatchlist,
     getWatchlistShows,
