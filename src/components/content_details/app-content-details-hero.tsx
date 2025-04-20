@@ -8,9 +8,13 @@ import ContentMoreDetails from "./app-content-more-details";
 import ImageCarousel from "../image-carousel";
 import FavoriteBtn from "../buttons/favorite-btn";
 import { SiImdb } from "react-icons/si";
+import { usePathname } from "next/navigation";
+import { Content } from "@/types/content";
 
-export default function Hero({ content }: { content: Movie | null }) {
+export default function Hero({ content }: { content: Content }) {
   const [selectedLanguage, setSelectedLanguage] = useState("English");
+  const pathname = usePathname();
+  const contentType = pathname.split("/")[1].slice(0, -1);
 
   return (
     <div className="h-screen w-screen bg-black relative ">
@@ -82,13 +86,13 @@ export default function Hero({ content }: { content: Movie | null }) {
 
         <div className="h-max w-full flex gap-5">
           <WatchBtn />
-          <AddToWatchList contentId={content?._id} />
+          <AddToWatchList contentId={content?._id} contentType={contentType} />
           <ContentMoreDetails content={content} />
         </div>
       </div>
 
       <div className="absolute right-10 top-1/2 z-30">
-        <FavoriteBtn contentId={content?._id} />
+        <FavoriteBtn contentId={content?._id} contentType={contentType} />
       </div>
       <Screenshots content={content} />
     </div>
