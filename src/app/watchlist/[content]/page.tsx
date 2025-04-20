@@ -1,4 +1,4 @@
-import Watchlist from "@/components/app-watchlist";
+import Watchlist from "@/components/watchlist/Watchlist";
 
 export default function page() {
   return <Watchlist />;
