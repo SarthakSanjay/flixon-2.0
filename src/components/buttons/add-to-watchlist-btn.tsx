@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { useWatchlist } from "@/hooks/use-watchlist";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
+import { Content } from "@/types/content";
 
 export default function AddToWatchList({
   contentId,
@@ -18,12 +19,12 @@ export default function AddToWatchList({
   contentType: string;
 }) {
   const {
-    addToWatchlist,
+    addMovieToWatchlist,
+    addShowToWatchlist,
     getWatchlistMovies,
     getWatchlistShows,
     removeFromWatchlist,
     loading,
-    error,
   } = useWatchlist();
   const [isPresent, setIsPresent] = useState(false);
 
@@ -35,7 +36,11 @@ export default function AddToWatchList({
         await removeFromWatchlist(profileId, contentId);
         setIsPresent(false);
       } else {
-        await addToWatchlist(contentId, profileId);
+        if (contentType === "movie") {
+          await addMovieToWatchlist(contentId, profileId);
+        } else {
+          await addShowToWatchlist(contentId, profileId);
+        }
         setIsPresent(true);
       }
     }
@@ -47,16 +52,20 @@ export default function AddToWatchList({
       if (profileId) {
         if (contentType === "movie") {
           const res = await getWatchlistMovies(profileId);
-          if (res) {
+          if (res?.watchlist) {
             setIsPresent(
-              res?.watchlist.some((content) => content._id === contentId),
+              res.watchlist.some(
+                (content: Content) => content._id === contentId,
+              ),
             );
           }
         } else {
           const res = await getWatchlistShows(profileId);
-          if (res) {
+          if (res?.watchlist) {
             setIsPresent(
-              res?.watchlist.some((content) => content._id === contentId),
+              res.watchlist.some((content: Content) => {
+                return content._id === contentId;
+              }),
             );
           }
         }
