@@ -1,3 +1,4 @@
+import { Contents } from "./content";
 import { Movie } from "./movie";
 import { Episode, Season, Show } from "./show";
 import { ProfileProps } from "./user";
@@ -56,5 +57,5 @@ export interface WatchlistShowResponse {
 
 export interface FavoriteResponse {
   message: string;
-  data: Movie[];
+  data: Contents;
 }
