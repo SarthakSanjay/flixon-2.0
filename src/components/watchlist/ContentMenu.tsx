@@ -14,11 +14,10 @@ export default function ContentMenu() {
           <Button
             key={i}
             className={cn(
-              "text-white text-lg bg-white/20",
-              contentType === s ? "bg-orange-500/20" : "",
+              "text-white text-lg bg-white/20 hover:bg-zinc-500",
+              contentType === s ? "bg-orange-500/50 hover:bg-orange-700" : "",
             )}
             onClick={() => {
-              console.log("clicked");
               setContentType(s);
             }}
           >
