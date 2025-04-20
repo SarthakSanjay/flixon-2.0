@@ -1,13 +1,13 @@
 "use client";
+
 import Hero from "./app-content-details-hero";
-import { Movie } from "@/types/movie";
 import { useEffect, useState } from "react";
 import Cast from "./app-content-cast";
 import ContentCarousel from "../app-content-carousel";
 import useContent from "@/hooks/use-content";
-import { Show } from "@/types/show";
 import Loading from "../loading";
-import Episodes from "./show-episodes";
+import EpisodesContainer from "../show_details/EpisodesContainer";
+import { Content } from "@/types/content";
 
 export default function ContentDetails({
   contentId,
@@ -16,28 +16,25 @@ export default function ContentDetails({
   contentId: string;
   type: string;
 }) {
-  const { getMovieById, getShowById, loading, error } = useContent();
-  const [movie, setMovie] = useState<Movie | null>(null);
-  const [show, setShow] = useState<Show | null>(null);
+  const { getMovieById, getShowById, loading } = useContent();
+  const [content, setContent] = useState<Content | null>(null);
 
   useEffect(() => {
     const fetch = async () => {
       if (type === "movie") {
         const data = await getMovieById(contentId);
         if (data) {
-          setMovie(data.movie);
+          setContent(data.movie);
         }
       } else {
         const data = await getShowById(contentId);
         if (data) {
-          setShow(data.show);
+          setContent(data.show);
         }
       }
     };
     fetch();
   }, [contentId]);
-
-  const content = movie || show;
 
   if (loading || !content) {
     return <Loading />;
@@ -46,7 +43,7 @@ export default function ContentDetails({
     <div className="h-screen w-screen overflow-x-hidden overflow-y-scroll">
       <Hero content={content} />
       <Cast cast={content?.cast} />
-      {type === "show" ? <Episodes /> : ""}
+      {type === "show" ? <EpisodesContainer /> : ""}
       <ContentCarousel genre="Action" type={type} />
     </div>
   );
