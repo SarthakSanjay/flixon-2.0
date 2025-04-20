@@ -1,4 +1,4 @@
-import Favorite from "@/components/app-favorite";
+import Favorite from "@/components/favorite/Favorite";
 
 export default function page() {
   return <Favorite />;
