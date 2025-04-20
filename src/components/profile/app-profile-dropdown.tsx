@@ -23,7 +23,6 @@ export default function ProfileDropdown() {
   const [profile] = useAtom(profileAtom);
 
   useEffect(() => {
-    console.log(profile.id);
     const fetchProfile = async () => {
       if (profile) {
         if (!profile.id) {
