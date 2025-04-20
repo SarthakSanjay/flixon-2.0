@@ -10,11 +10,20 @@ import { useEffect, useState } from "react";
 import Loading from "../loading";
 import useFavorite from "@/hooks/use-favorite";
 import { Star } from "lucide-react";
+import { Content } from "@/types/content";
 
-export default function FavoriteBtn({ contentId }: { contentId?: string }) {
+export default function FavoriteBtn({
+  contentId,
+  contentType,
+}: {
+  contentId?: string;
+  contentType: string;
+}) {
   const {
-    addContentToFavorite,
-    getAllUserFavorite,
+    addMovieToFavorite,
+    addShowToFavorite,
+    getAllFavoriteShows,
+    getAllFavoriteMovies,
     removeContentFromFavorite,
     loading,
     error,
@@ -29,23 +38,38 @@ export default function FavoriteBtn({ contentId }: { contentId?: string }) {
         await removeContentFromFavorite(profileId, contentId);
         setIsPresent(false);
       } else {
-        await addContentToFavorite(profileId, contentId);
+        if (contentType === "movie") {
+          await addMovieToFavorite(profileId, contentId);
+        } else {
+          await addShowToFavorite(profileId, contentId);
+        }
         setIsPresent(true);
       }
     }
   };
 
   useEffect(() => {
-    const fetchWatchlist = async () => {
+    const fetchFavorites = async () => {
       const profileId = localStorage.getItem("profileId");
       if (profileId) {
-        const res = await getAllUserFavorite(profileId);
-        if (res) {
-          setIsPresent(res?.data.some((content) => content._id === contentId));
+        if (contentType === "movie") {
+          const res = await getAllFavoriteMovies(profileId);
+          if (res) {
+            setIsPresent(
+              res?.data.some((content: Content) => content._id === contentId),
+            );
+          }
+        } else {
+          const res = await getAllFavoriteShows(profileId);
+          if (res) {
+            setIsPresent(
+              res?.data.some((content: Content) => content._id === contentId),
+            );
+          }
         }
       }
     };
-    fetchWatchlist();
+    fetchFavorites();
   }, []);
 
   if (loading) {
