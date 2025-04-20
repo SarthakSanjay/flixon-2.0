@@ -9,13 +9,13 @@ import ContentCard from "../app-content-card";
 import ContentMenu from "./ContentMenu";
 import { useAtomValue } from "jotai";
 import { contentTypeAtom } from "@/atoms/atom";
-
-type Content = Movie[] | Show[];
+import { Contents } from "@/types/content";
+import Loading from "../loading";
 
 export default function Watchlist() {
   const { getWatchlistMovies, getWatchlistShows, loading } = useWatchlist();
   const contentType = useAtomValue(contentTypeAtom);
-  const [content, setContent] = useState<Content>([]);
+  const [content, setContent] = useState<Contents>([]);
 
   useEffect(() => {
     const fetchWatchlist = async () => {
@@ -29,7 +29,7 @@ export default function Watchlist() {
         }
       }
       if (contentType === "show") {
-        console.log(contentType, "from movie");
+        console.log(contentType, "from show");
 
         const data = await getWatchlistShows(profileId);
         if (data) {
@@ -40,23 +40,25 @@ export default function Watchlist() {
     fetchWatchlist();
   }, [contentType]);
 
-  console.log("content type ", contentType);
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) <Loading />;
+
   return (
-    <div className="h-screen w-screen text-white bg-black border border-white py-16 px-12 pt-36 flex flex-wrap gap-5 relative">
-      <h1 className="h-14 text-2xl text-white absolute left-12 top-20">
+    <div className="h-screen w-screen text-white bg-black py-16 px-12 pt-20 flex flex-col relative">
+      <h1 className="h-14 text-2xl text-white">
         {capatilizedFirstLetter("watchlist")}
       </h1>
       <ContentMenu />
-      {content.length > 0
-        ? content.map((cont: Show | Movie) => {
+      <div className="h-max w-full flex flex-wrap gap-5">
+        {content.length > 0 ? (
+          content.map((cont: Show | Movie) => {
             return (
               <ContentCard key={cont._id} content={cont} type={contentType} />
             );
           })
-        : ""}
+        ) : (
+          <h1>No {contentType} in favorites</h1>
+        )}
+      </div>
     </div>
   );
 }
