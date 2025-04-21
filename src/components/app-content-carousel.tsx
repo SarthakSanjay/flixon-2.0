@@ -5,6 +5,7 @@ import { Movie } from "@/types/movie";
 import { useRouter } from "next/navigation";
 import useContent from "@/hooks/use-content";
 import { Show } from "@/types/show";
+import Loading from "./loading";
 
 export default function ContentCarousel({
   genre,
@@ -21,8 +22,8 @@ export default function ContentCarousel({
     getShowByGenre,
     getTrendingShows,
     loading,
-    error,
   } = useContent();
+  const [showMore, setShowMore] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -57,24 +58,28 @@ export default function ContentCarousel({
     }
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) <Loading />;
 
   if (!movies || !shows) {
     return "";
   }
 
   return (
-    <div className="h-[16rem] w-full flex flex-col group ">
-      <div className="h-[2.6rem] px-10 text-2xl flex justify-between items-center">
+    <div
+      className="h-[16rem] w-full flex flex-col "
+      onMouseEnter={() => setShowMore(true)}
+      onMouseLeave={() => setShowMore(false)}
+    >
+      <div className="h-[2.6rem] px-10 text-2xl flex justify-between items-end">
         <h1>{genre}</h1>
-        <button
-          className="bg-none border-none text-zinc-300 hover:text-white text-lg hidden group-hover:block"
-          onClick={() => router.push(`/movies/genre-${genre.toLowerCase()}`)}
-        >
-          More
-        </button>
+        {showMore && (
+          <button
+            className="bg-none border-none text-zinc-300 hover:text-white text-lg"
+            onClick={() => router.push(`/movies/genre-${genre.toLowerCase()}`)}
+          >
+            More
+          </button>
+        )}
       </div>
       {type === "show" ? (
         <div className="h-[13.4rem] py-[1rem] w-full flex  items-center overflow-x-scroll gap-10 px-10 no-scrollbar ">
