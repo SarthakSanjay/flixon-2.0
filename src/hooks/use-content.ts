@@ -61,6 +61,7 @@ export default function useContent() {
     setLoading(true);
     try {
       const res = await api.get("/api/trending/movies");
+      console.log(res.data);
       return res.data as MoviesResponse;
     } catch (error: any) {
       if (error.response) {
@@ -104,7 +105,7 @@ export default function useContent() {
   const getTrendingShows = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/api/shows/trending");
+      const res = await api.get("/api/trending/shows");
       return res.data as ShowsResponse;
     } catch (error: any) {
       if (error.response) {
