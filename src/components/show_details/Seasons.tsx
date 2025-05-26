@@ -27,20 +27,21 @@ export default function Seasons({ showId }: { showId: string }) {
 
   return (
     <div className="h-12 w-full flex gap-5">
-      {seasons.map((season) => {
-        return (
-          <Button
-            key={season._id}
-            className={cn(
-              "text-white text-lg bg-white/20",
-              season._id === currentSeason._id ? "bg-orange-500/20" : "",
-            )}
-            onClick={() => setCurrentSeason(season)}
-          >
-            Season {season.number}
-          </Button>
-        );
-      })}
+      {seasons &&
+        seasons.map((season) => {
+          return (
+            <Button
+              key={season._id}
+              className={cn(
+                "text-white text-lg bg-white/20",
+                season._id === currentSeason._id ? "bg-orange-500/20" : "",
+              )}
+              onClick={() => setCurrentSeason(season)}
+            >
+              Season {season.number}
+            </Button>
+          );
+        })}
     </div>
   );
 }

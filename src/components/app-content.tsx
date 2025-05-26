@@ -10,7 +10,8 @@ export default function Content({
   pathname: string;
   type: string;
 }) {
-  const genres = ["Action", "Romance", "Horror"];
+  const genres = ["Action", "Romance", "Horror", "Comedy"];
+  console.log("type", type);
   return (
     <div className="h-[100vh] border-0 border-green-500 w-full bg-black overflow-y-scroll">
       <div className="h-full w-full border-0 border-blue-500 ">
@@ -25,3 +26,10 @@ export default function Content({
     </div>
   );
 }
+
+const All = [
+  { type: "movie", genre: "action" },
+  { type: "movie", genre: "comedy" },
+  { type: "show", genre: "thriller" },
+  { type: "show", genre: "action" },
+];

@@ -64,7 +64,9 @@ export default function ProfileDetails() {
 
           <div className="h-full w-[70%] border border-red-50 p-10 flex gap-10">
             {["Watchlist", "Favorite", "Liked"].map((type, index) => {
-              return <Category type={type} total={(index + 1) * 10} />;
+              return (
+                <Category key={index} type={type} total={(index + 1) * 10} />
+              );
             })}
           </div>
         </div>
